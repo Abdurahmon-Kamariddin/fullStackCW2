@@ -1,0 +1,20 @@
+{
+  "name": "after-school-clubs",
+  "version": "1.0.0",
+  "description": "An application where one can book classes for their children afterschool at different locations in London",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abdurahmon-Kamariddin/fullStackCW2.git"
+  },
+  "author": "Abdurahmon Kamariddin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Abdurahmon-Kamariddin/fullStackCW2/issues"
+  },
+  "homepage": "https://github.com/Abdurahmon-Kamariddin/fullStackCW2#readme"
+}
