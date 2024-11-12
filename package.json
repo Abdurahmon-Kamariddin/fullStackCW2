@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Abdurahmon-Kamariddin/fullStackCW2/issues"
   },
-  "homepage": "https://github.com/Abdurahmon-Kamariddin/fullStackCW2#readme"
+  "homepage": "https://github.com/Abdurahmon-Kamariddin/fullStackCW2#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mongodb": "^6.10.0"
+  }
 }
