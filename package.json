@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/Abdurahmon-Kamariddin/fullStackCW2#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.1",
-    "mongodb": "^6.10.0"
+    "mongodb": "^4.12.1",
+    "path": "^0.12.7",
+    "properties-reader": "^2.3.0"
   }
 }
