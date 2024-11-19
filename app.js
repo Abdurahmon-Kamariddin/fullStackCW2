@@ -15,6 +15,7 @@ app.get("/clubs", async (request, response) => {
     const products = clubCollection.find({}).toArray( function(err, results) {
         if (err) {
             return nextTick(err);
+            console.log(err);
         }
         response.send(results);
         console.log(results);
@@ -25,16 +26,32 @@ app.get("/clubs", async (request, response) => {
 app.post("/saveOrder", async (request, response) => {
     console.log("POST /saveOrder");
     const order = request.body;
-    console.log(order);
     ordersCollection.insertOne(order, function(err, result) {
         if (err) {
             return nextTick(err);
+            console.log(err);
         }
         response.send(result);
         console.log(result);
     });
 });
 
+app.put("/updateAvailability", async (request, response) => {
+    console.log("PUT /updateAvailability");
+    const cart = request.body;
+    for (const item of cart){
+        try {
+        var clubID = item;
+        const result = clubCollection.updateOne(
+            { _id: ObjectId(clubID) },
+            { $inc: { availability: -1 } }
+        );
+        console.log("Updated club with ID " + clubID + " availability. Result:" + result);
+        } catch (error) {
+            console.log("Error updating availability for club " + clubID + ". Err: " + error);
+        }
+    }
+});
 
 
 const port = process.env.PORT || 3000;
