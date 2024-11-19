@@ -10,8 +10,8 @@ let db = client.db("FullStackCW");
 const clubCollection = db.collection("clubs");
 const ordersCollection = db.collection("orders");
 
-app.get("/products", async (request, response) => {
-    console.log("GET /products");
+app.get("/clubs", async (request, response) => {
+    console.log("GET /clubs");
     const products = clubCollection.find({}).toArray( function(err, results) {
         if (err) {
             return nextTick(err);
@@ -37,6 +37,7 @@ app.post("/saveOrder", async (request, response) => {
 
 
 
-
-http.createServer(app).listen(3000);
-
+const port = process.env.PORT || 3000;
+app.listen(port, function() { {
+    console.log("Server is running on port " + port);
+}});
