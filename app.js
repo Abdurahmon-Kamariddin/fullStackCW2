@@ -1,7 +1,11 @@
 const http = require('http');
+const cors = require('cors');
 const express = require('express');
+
 const app = express();
 app.use(express.json());
+app.use(cors());
+
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = "mongodb+srv://WebstoreUser:Qoraqamish2002@webstorecluster.3t3jb.mongodb.net/?retryWrites=true&w=majority&appName=WebstoreCluster";
@@ -38,13 +42,13 @@ app.post("/saveOrder", async (request, response) => {
 
 app.put("/updateAvailability", async (request, response) => {
     console.log("PUT /updateAvailability");
-    const cart = request.body;
+    const cart = request.body.cart;
     for (const item of cart){
         try {
         var clubID = item;
-        const result = clubCollection.updateOne(
-            { _id: ObjectId(clubID) },
-            { $inc: { availability: -1 } }
+        const result = await clubCollection.updateOne(
+            { id: clubID },
+            { $inc: { availableSeats: -1 } }
         );
         console.log("Updated club with ID " + clubID + " availability. Result:" + result);
         } catch (error) {
