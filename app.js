@@ -4,12 +4,7 @@ const express = require('express');
 
 const app = express();
 app.use(express.json());
-app.use(cors(
-    {
-        origin: 'https://abdurahmon-kamariddin.github.io/fullstackCW/',
-        methods: ['GET', 'POST', 'PUT']
-    }
-));
+app.use(cors());
 
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
