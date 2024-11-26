@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = "mongodb+srv://WebstoreUser:Qoraqamish2002@webstorecluster.3t3jb.mongodb.net/?retryWrites=true&w=majority&appName=WebstoreCluster";
