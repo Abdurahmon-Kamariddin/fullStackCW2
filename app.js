@@ -51,11 +51,16 @@ app.put("/updateAvailability", async (request, response) => {
                 { $inc: { availableSeats: -1 } }
             );
             console.log("Updated club with ID " + clubID + " availability. Result:" + response);
-            response.status(200).send({ message: "All clubs updated successfully." });
+            response.status(200);
         } catch (error) {
             console.log("Error updating availability for club " + clubID + ". Err: " + error);
-            response.status(500).send({ message: "Error updating availability." });
+            response.status(500)
         }
+    }
+    if (response.statusCode != 500) {
+        response.status(200).send({ message: "All clubs updated successfully." });
+    } else {
+        response.status(500).send({ message: "Error updating availability." });
     }
 });
 
