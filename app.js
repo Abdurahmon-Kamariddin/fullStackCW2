@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors(
     {
-        origin: 'https://abdurahmon-kamariddin.github.io',
+        origin: 'https://abdurahmon-kamariddin.github.io/fullstackCW/',
         methods: ['GET', 'POST', 'PUT']
     }
 ));
@@ -55,9 +55,11 @@ app.put("/updateAvailability", async (request, response) => {
                 { id: clubID },
                 { $inc: { availableSeats: -1 } }
             );
-            console.log("Updated club with ID " + clubID + " availability. Result:" + result);
+            console.log("Updated club with ID " + clubID + " availability. Result:" + response);
+            response.status(200).send({ message: "All clubs updated successfully." });
         } catch (error) {
             console.log("Error updating availability for club " + clubID + ". Err: " + error);
+            response.status(500).send({ message: "Error updating availability." });
         }
     }
 });
