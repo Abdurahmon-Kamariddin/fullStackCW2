@@ -48,7 +48,7 @@ app.post("/saveOrder", async (request, response) => {
 app.get("/search", async (request, response) => {
     try {
         const search = request.query.searchQuery;
-        if (!searchQuery || searchQuery === "") {
+        if (!search || search === "") {
             response.status(400).send({ message: "Search query is empty." });
             return
         }
