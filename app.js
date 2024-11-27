@@ -2,7 +2,7 @@ const http = require('http');
 const cors = require('cors');
 const express = require('express');
 const path = require('path');
-const logger = require('./logger');
+const loggerM = require('./logger');
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -24,7 +24,7 @@ const logger = (request, response, next) => {
 
 module.exports = logger;
 
-app.use(logger);
+app.use(loggerM);
 
 app.get("/clubs", async (request, response) => {
     console.log("GET /clubs");
