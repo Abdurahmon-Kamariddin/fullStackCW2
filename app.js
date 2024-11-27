@@ -45,7 +45,7 @@ app.post("/saveOrder", async (request, response) => {
 app.post("/search", async (request, response) => {
     try {
         const search = request.body.searchQuery;
-        const result = await clubCollection.find({ subject: search }).toArray();
+        const result = await clubCollection.find({ subject: { $regex: search, $options: 'i' }}).toArray(); // allows for case-insensitive and partial searches
         if (result.length === 0) {
             response.status(404).send({ message: "No clubs found." });
         } else {
