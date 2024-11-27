@@ -17,8 +17,7 @@ const ordersCollection = db.collection("orders");
 
 
 const logger = (request, response, next) => {
-    const timeStamp = new Date().toISOString;
-    console.log(`LOGGER : ${request.method} request to ${request.path}`);
+    console.log(`LOGGER : ${request.method} request to ${request.path}. Body: ${JSON.stringify(request.body)} `);
     next();
 };
 
