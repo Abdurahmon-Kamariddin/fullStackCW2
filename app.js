@@ -42,6 +42,22 @@ app.post("/saveOrder", async (request, response) => {
     });
 });
 
+app.post("/search", async (request, response) => {
+    try {
+        const search = request.body.searchQuery;
+        const result = await clubCollection.find({ subject: search }).toArray();
+        if (results.length === 0) {
+            response.status(404).send({ message: "No clubs found." });
+        } else {
+            response.status(200);
+            response.json(results);
+        }
+    } catch (error) {
+        console.log("Error searching for club. Err: " + error);
+        response.status(500).send({ message: "Error searching for club." });
+    }
+});
+
 app.put("/updateAvailability", async (request, response) => {
     console.log("PUT /updateAvailability");
     const cart = request.body.cart;
