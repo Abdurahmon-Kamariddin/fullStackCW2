@@ -46,11 +46,10 @@ app.post("/search", async (request, response) => {
     try {
         const search = request.body.searchQuery;
         const result = await clubCollection.find({ subject: search }).toArray();
-        if (results.length === 0) {
+        if (result.length === 0) {
             response.status(404).send({ message: "No clubs found." });
         } else {
-            response.status(200);
-            response.json(results);
+            response.status(200).json(result);
         }
     } catch (error) {
         console.log("Error searching for club. Err: " + error);
