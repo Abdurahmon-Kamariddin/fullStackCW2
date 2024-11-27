@@ -2,7 +2,7 @@ const http = require('http');
 const cors = require('cors');
 const express = require('express');
 const path = require('path');
-
+const logger = require('./logger');
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -15,6 +15,16 @@ const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 let db = client.db("FullStackCW");
 const clubCollection = db.collection("clubs");
 const ordersCollection = db.collection("orders");
+
+const logger = (request, response, next) => {
+    const timeStamp = new Date().toString;
+    console.log(`${timeStamp} | ${request.method} request to ${request.path}`);
+    next();
+};
+
+module.exports = logger;
+
+app.use(logger);
 
 app.get("/clubs", async (request, response) => {
     console.log("GET /clubs");
