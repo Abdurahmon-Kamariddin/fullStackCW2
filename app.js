@@ -25,20 +25,17 @@ const logger = (request, response, next) => {
 app.use(logger);
 
 app.get("/clubs", async (request, response) => {
-    console.log("GET /clubs");
     const products = clubCollection.find({}).toArray(function (err, results) {
         if (err) {
             return nextTick(err);
             console.log(err);
         }
         response.send(results);
-        console.log(results);
     });
 });
 
 
 app.post("/saveOrder", async (request, response) => {
-    console.log("POST /saveOrder");
     const order = request.body;
     ordersCollection.insertOne(order, function (err, result) {
         if (err) {
@@ -46,7 +43,6 @@ app.post("/saveOrder", async (request, response) => {
             console.log(err);
         }
         response.send(result);
-        console.log(result);
     });
 });
 
