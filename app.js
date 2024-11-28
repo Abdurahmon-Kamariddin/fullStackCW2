@@ -4,10 +4,11 @@ const express = require('express');
 const path = require('path');
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors()); 
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); //serving the images for our clubs via the public file
 
+//connection to the mongo database
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = "mongodb+srv://WebstoreUser:Qoraqamish2002@webstorecluster.3t3jb.mongodb.net/?retryWrites=true&w=majority&appName=WebstoreCluster";
 const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
@@ -15,7 +16,7 @@ let db = client.db("FullStackCW");
 const clubCollection = db.collection("clubs");
 const ordersCollection = db.collection("orders");
 
-
+//logger middleware that shows each requests method, path, body and query
 const logger = (request, response, next) => {
     console.log(`LOGGER : ${request.method} request to ${request.path}. Body: ${JSON.stringify(request.body)} Query: ${JSON.stringify(request.query)} ...`);
     next();
@@ -23,6 +24,7 @@ const logger = (request, response, next) => {
 
 app.use(logger);
 
+//get route that returns all the clubs in the database and is fetched in the frontend
 app.get("/clubs", async (request, response) => {
     const products = clubCollection.find({}).toArray(function (err, results) {
         if (err) {
@@ -33,7 +35,7 @@ app.get("/clubs", async (request, response) => {
     });
 });
 
-
+//recieves the user's order details from the frontend and inserts a new document into the order collection
 app.post("/saveOrder", async (request, response) => {
     const order = request.body;
     ordersCollection.insertOne(order, function (err, result) {
@@ -45,10 +47,11 @@ app.post("/saveOrder", async (request, response) => {
     });
 });
 
+//recieves the searchQuery key and value (entered by the user) pair and is the used to return all clubs that match the search query (should they exist)
 app.get("/search", async (request, response) => {
     try {
         const search = request.query.searchQuery;
-        if (!search || search === "") {
+        if (!search || search === "") { // if the search query is empty, return an error message
             response.status(400).send({ message: "Search query is empty." });
             return
         }
@@ -56,7 +59,7 @@ app.get("/search", async (request, response) => {
         if (result.length === 0) {
             response.status(404).send({ message: "No clubs found." });
         } else {
-            response.status(200).json(result);
+            response.status(200).json(result); //successful search with matching results so they are returned
         }
     } catch (error) {
         console.log("Error searching for club. Err: " + error);
@@ -64,9 +67,10 @@ app.get("/search", async (request, response) => {
     }
 });
 
+//put route that is called once the checkout is finished and the club seats purchased are removed from the availability
 app.put("/updateAvailability", async (request, response) => {
     console.log("PUT /updateAvailability");
-    const cart = request.body.cart;
+    const cart = request.body.cart; //we recieve the cart (which is just the ids of each club seat they purchased ie. [1,1,2,5]) from the frontend
     for (const item of cart) {
         try {
             var clubID = item;
