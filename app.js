@@ -17,7 +17,8 @@ const ordersCollection = db.collection("orders");
 
 
 const logger = (request, response, next) => {
-    console.log(`LOGGER : ${request.method} request to ${request.path}. Body: ${JSON.stringify(request.body)} Query: ${JSON.stringify(request.query)} `);
+    const resBodyShort = JSON.stringify(response.body).slice(0, 100);
+    console.log(`LOGGER : ${request.method} request to ${request.path}. Body: ${JSON.stringify(request.body)} Query: ${JSON.stringify(request.query)} Response (first 100 chars): ${resBodyShort} ...`);
     next();
 };
 
