@@ -17,7 +17,12 @@ const ordersCollection = db.collection("orders");
 
 
 const logger = (request, response, next) => {
-    const resBodyShort = JSON.stringify(response.body).slice(0, 100);
+    const resBody = JSON.stringify(response.body).slice(0, 100);
+    if (resBody.length > 100) {
+        const resBodyShort = resBody.slice(0, 100);
+    } else {
+        const resBodyShort = resBody
+    }
     console.log(`LOGGER : ${request.method} request to ${request.path}. Body: ${JSON.stringify(request.body)} Query: ${JSON.stringify(request.query)} Response (first 100 chars): ${resBodyShort} ...`);
     next();
 };
@@ -53,7 +58,7 @@ app.get("/search", async (request, response) => {
             response.status(400).send({ message: "Search query is empty." });
             return
         }
-        const result = await clubCollection.find({ subject: { $regex: search, $options: 'i' }}).toArray(); // allows for case-insensitive and partial searches
+        const result = await clubCollection.find({ subject: { $regex: search, $options: 'i' } }).toArray(); // allows for case-insensitive and partial searches
         if (result.length === 0) {
             response.status(404).send({ message: "No clubs found." });
         } else {
