@@ -17,13 +17,7 @@ const ordersCollection = db.collection("orders");
 
 
 const logger = (request, response, next) => {
-    const resBody = JSON.stringify(response.body).slice(0, 100);
-    if (resBody.length > 100) {
-        const resBodyShort = resBody.slice(0, 100);
-    } else {
-        const resBodyShort = resBody
-    }
-    console.log(`LOGGER : ${request.method} request to ${request.path}. Body: ${JSON.stringify(request.body)} Query: ${JSON.stringify(request.query)} Response (first 100 chars): ${resBodyShort} ...`);
+    console.log(`LOGGER : ${request.method} request to ${request.path}. Body: ${JSON.stringify(request.body)} Query: ${JSON.stringify(request.query)} ...`);
     next();
 };
 
@@ -35,7 +29,7 @@ app.get("/clubs", async (request, response) => {
             return nextTick(err);
             console.log(err);
         }
-        response.send(results);
+        response.status(200).send(results);
     });
 });
 
@@ -47,7 +41,7 @@ app.post("/saveOrder", async (request, response) => {
             return nextTick(err);
             console.log(err);
         }
-        response.send(result);
+        response.status(200).send(result);
     });
 });
 
